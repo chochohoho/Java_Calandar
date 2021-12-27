@@ -51,7 +51,7 @@ public class Calander {
 		int syear = 1970;
 		int smonth = 1;
 		int sdays = 1;
-		final int STANDARD_WEEKDAY = 3;// thursday
+		final int STANDARD_WEEKDAY = 4;// thursday
 		
 		int nCount = 0;
 		for(int i = syear; i < year; i++) {
@@ -65,7 +65,7 @@ public class Calander {
 			nCount += delta;
 		}
 		
-		nCount += day ;
+		nCount += day -1;
 		
 		int weekday = (nCount + STANDARD_WEEKDAY) % 7;
 		
