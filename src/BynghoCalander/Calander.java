@@ -1,11 +1,40 @@
 package BynghoCalander;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+
 public class Calander {
 
 	private static final int[] MAX_DAYS = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	private static final int[] LEAP_MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 	
+	public Calander() {
+		
+		planMap = new HashMap<Date, PlanItem>();
+	}
+	private HashMap <Date, PlanItem> planMap;
+	/**
+	 * 
+	 * @param date ex : "2021-12-27"
+	 * @param plan 
+	 * @throws ParseException 
+	 */
+	public void registerPlan(String strdate, String plan) throws ParseException {
+		
+		PlanItem p = new PlanItem(strdate, plan);
+		
+		planMap.put(p.getDate(), p);
+	}
+	
+	public PlanItem searchPlan(String strDate) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+		
+		return planMap.get(date);
+		
+	}
 	public boolean isLeapYear(int year) {	
 		if(year%4 == 0 && (year % 100 != 0 || year % 400 != 0))
 			return true;
@@ -71,5 +100,10 @@ public class Calander {
 		
 		return weekday;
 	}
+	
+//	public static void main(String[] argc) throws ParseException {
+//		Calander cal = new Calander();
+//		cal.registerPlan("2021-12-27", "hello");
+//	}
 	
 }
