@@ -2,8 +2,8 @@ package BynghoCalander;
 
 public class Calander {
 
-	private static final int[] MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 30, 31, 30, 31, 30 };
-	private static final int[] LEAP_MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 30, 31, 30, 31, 30 };
+	private static final int[] MAX_DAYS = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	private static final int[] LEAP_MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 	
 	public boolean isLeapYear(int year) {	
@@ -24,20 +24,52 @@ public class Calander {
 	public void printDays(int year, int month, int weekday) {
 		
 		System.out.printf("    <<%4d %3d>>    \n", year, month);
-		System.out.println("  일  월  화  수  목  금  토");
+		System.out.println(" SU MO TU WE TH FR SA");
 		
-		for(int i=0; i<weekday; i++)
-			System.out.print("    ");
+		
+		int weekdaysnum = getWeekDay(year, month, 1);
+		for(int i=0; i<weekdaysnum; i++)
+			System.out.print("   ");
 		
 		int nMaxdays = getmaxDaysofMonth(year, month);
 		
 		for(int i=1; i <= nMaxdays; i++) {
-			System.out.printf("%3d ",i);
+			System.out.printf("%3d",i);
 			
-			if((i+weekday)%7 == 0)
+			if((i+weekdaysnum)%7 == 0)
 				System.out.println();
 		}
 		
 		System.out.println();
 	}
+
+	private int getWeekDay(int year, int month, int day) {
+		// TODO Auto-generated method stub
+		
+		//1970.1.1 (th)
+		
+		int syear = 1970;
+		int smonth = 1;
+		int sdays = 1;
+		final int STANDARD_WEEKDAY = 3;// thursday
+		
+		int nCount = 0;
+		for(int i = syear; i < year; i++) {
+			
+			int delta = isLeapYear(i)? 366: 365;
+			nCount += delta;
+		}
+		
+		for(int i = 1; i < month; i++) {
+			int delta = getmaxDaysofMonth(year, i);
+			nCount += delta;
+		}
+		
+		nCount += day ;
+		
+		int weekday = (nCount + STANDARD_WEEKDAY) % 7;
+		
+		return weekday;
+	}
+	
 }
